@@ -8,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class ListaCorreosComponent implements OnInit {
 
   correos: any[];
+  responder: boolean;
+  correoAResponder: any;
 
   constructor() {
     const correo1 = {
@@ -30,9 +32,34 @@ export class ListaCorreosComponent implements OnInit {
     this.correos = [];
     this.correos.push(correo1);
     this.correos.push(correo2);
+
+    this.correos.push({
+      titulo: "Titulo del 3",
+      cuerpo: `Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email
+        Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuer`,
+      emisor: 'correoEmisor3@gmail.com',
+      destinatario: 'correoReceptor@gmail.com',
+      leido: false,
+    });
+    this.correos.push({
+      titulo: "Titulo del 4",
+      cuerpo: `Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email
+        Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuerpo del Email, Cuer`,
+      emisor: 'correoEmisor4@gmil.com',
+      destinatario: 'correoReceptor@gmail.com',
+      leido: false,
+    });
+
+    this.responder = false;
   }
 
   ngOnInit() {
+  }
+
+  clickResponder(correo) {
+    //this.responder = !this.responder;
+    //this.correoAResponder = correo;
+    correo.responder = !correo.responder;
   }
 
 }

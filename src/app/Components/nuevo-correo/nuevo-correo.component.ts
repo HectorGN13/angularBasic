@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -10,18 +10,27 @@ export class NuevoCorreoComponent implements OnInit {
 
   nuevoCorreo: FormGroup;
   submitted = false;
+  @Input() correo: any;
 
   constructor(private formBuilder: FormBuilder) { }
 
-    ngOnInit() {
-        this.nuevoCorreo = this.formBuilder.group({
-          titulo: ['', [Validators.required, Validators.minLength(3)]],
-          cuerpo: ['', [Validators.required, Validators.minLength(10)]],
-          destinatario: ['', [Validators.required, Validators.email]],
-        });
+  ngOnInit() {
+    this.nuevoCorreo = this.formBuilder.group({
+      titulo: ['', [Validators.required, Validators.minLength(3)]],
+      cuerpo: ['', [Validators.required, Validators.minLength(10)]],
+      destinatario: ['', [Validators.required, Validators.email]],
+    });
+    
+    if(this.correo != undefined){
+      console.log("A",this.correo);
+      this.nuevoCorreo.patchValue({
+        titulo: 'Re: '+ this.correo.titulo, 
+        destinatario: this.correo.emisor
+      });
     }
+  }
 
-    get formulario() { return this.nuevoCorreo.controls; }
+  get formulario() { return this.nuevoCorreo.controls; }
 
     onSubmit() {
         this.submitted = true;
@@ -31,8 +40,8 @@ export class NuevoCorreoComponent implements OnInit {
         }
 
         let correo = this.nuevoCorreo.value;
-        correo.leido= false;
-        correo.emisor= 'correoEmisor1@openWebinar.inv';
+        correo.leido = false;
+        correo.emisor = 'correoEmisor1@openWebinar.inv';
 
         alert("Correo Enviado \nEliminamos el formulario");
         this.onReset();
